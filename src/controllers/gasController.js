@@ -2,7 +2,6 @@ const { fetchGasData } = require("../services/fetchData");
 const getAvgGasPrice = async (req, res) => {
   try {
     const gasData = await fetchGasData();
-    console.log("gas details is ", gasData[0]);
 
     //this checks if the gas price not available for a particular item
     const validGasPrices = gasData.filter(
@@ -25,4 +24,32 @@ const getAvgGasPrice = async (req, res) => {
   }
 };
 
-module.exports = { getAvgGasPrice };
+const getTransactionsByBlock = async (req, res) => {
+  try {
+    const gasData = await fetchGasData();
+
+    const blockTransactions = {};
+
+    for (let item of gasData) {
+      blockTransactions[item["Block Number"]] =
+        (blockTransactions[item["Block Number"]] || 0) + 1;
+    }
+
+    const transactionsByBlock = [];
+
+    for (const key in blockTransactions) {
+      transactionsByBlock.push({
+        block_number: key,
+        total_transactions: blockTransactions[key],
+      });
+    }
+
+    res.status(200).json({ status: "success", data: transactionsByBlock });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ status: "failed", message: "something went wrong!" });
+  }
+};
+module.exports = { getAvgGasPrice, getTransactionsByBlock };
