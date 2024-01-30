@@ -24,32 +24,4 @@ const getAvgGasPrice = async (req, res) => {
   }
 };
 
-const getTransactionsByBlock = async (req, res) => {
-  try {
-    const gasData = await fetchGasData();
-
-    const blockTransactions = {};
-
-    for (let item of gasData) {
-      blockTransactions[item["Block Number"]] =
-        (blockTransactions[item["Block Number"]] || 0) + 1;
-    }
-
-    const transactionsByBlock = [];
-
-    for (const key in blockTransactions) {
-      transactionsByBlock.push({
-        block_number: key,
-        total_transactions: blockTransactions[key],
-      });
-    }
-
-    res.status(200).json({ status: "success", data: transactionsByBlock });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ status: "failed", message: "something went wrong!" });
-  }
-};
-module.exports = { getAvgGasPrice, getTransactionsByBlock };
+module.exports = { getAvgGasPrice };
