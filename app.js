@@ -1,8 +1,12 @@
 const express = require("express");
-
 const app = express();
 
 app.use(express.json());
+
+const tableRoute = require("./src/routes/tableRoute");
+
+app.use("/tables", tableRoute);
+
 app.get("/", (req, res) => {
   res
     .status(200)
