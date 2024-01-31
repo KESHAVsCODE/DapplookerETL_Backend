@@ -79,7 +79,38 @@ GET
 }
 ```
 
-### 4. `/block/transactions`
+### 4. `/block/transform`
+
+#### Description
+
+Transform the current structure by removing specific fields from the array and returning the recent 10 transactions.
+
+#### Method
+
+PUT
+
+#### Response
+
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "From Address": ...,
+      "Amount": ...,
+      "Gas Limit": ...,
+      "Gas Price": ...,
+      "ID": ...,
+      "To Address": ...,
+      "Block Number": ...,
+      "Timestamp": ...
+    },
+    // ... 9 more block details
+  ]
+}
+```
+
+### 5. `/block/transactions`
 
 #### Description
 
@@ -104,7 +135,7 @@ GET
 }
 ```
 
-### 5. `/block/:block_number`
+### 6. `/block/:block_number`
 
 #### Description
 

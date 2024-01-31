@@ -27,10 +27,9 @@ const isValidTable = (entityDefinition) => {
     entityDefinition.fields !== "" &&
     entityDefinition.fields !== undefined &&
     entityDefinition.fields.length > 0 &&
-    !entityDefinition.name.startsWith("_")
+    !entityDefinition.name.startsWith("_") &&
+    !this.entitiesToExclude.includes(entityDefinition.name.toLowerCase())
   );
 };
-
-//!this.entitiesToExclude.includes(entityDefinition.name.toLowerCase())
 
 module.exports = { getTables };

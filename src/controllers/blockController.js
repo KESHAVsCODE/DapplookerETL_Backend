@@ -99,8 +99,35 @@ const getBlockDetails = async (req, res) => {
   }
 };
 
+const transformBlockDetails = async (req, res) => {
+  try {
+    const transactionsData = await fetchGasData();
+
+    const transformedData = transactionsData.slice(0, 10).map((transaction) => {
+      const {
+        "Max Priority Fee Per Gas": maxPriorityFeePerGas,
+        Status,
+        "Max Fee Per Gas": maxFeePerGas,
+        Nonce,
+        "Gas Used": gasUsed,
+        ...restOfTransaction
+      } = transaction;
+
+      return restOfTransaction;
+    });
+
+    res.status(200).json({ status: "success", data: transformedData });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ status: "failed", message: "something went wrong!" });
+  }
+};
+
 module.exports = {
   getTransactionsByBlock,
   getAllBlockDetails,
   getBlockDetails,
+  transformBlockDetails,
 };
