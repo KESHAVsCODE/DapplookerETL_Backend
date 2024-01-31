@@ -77,7 +77,7 @@ const getBlockDetails = async (req, res) => {
 
     const blockDetails = {
       block_number: "",
-      transaction_count: 1,
+      transaction_count: 0,
       timestamp: "",
     };
 
